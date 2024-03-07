@@ -1,4 +1,8 @@
 import pytest
+import sys
+
+sys.path.append(".")
+
 from src import configs
 import playwright.sync_api as playwright
 
