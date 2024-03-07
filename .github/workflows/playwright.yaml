@@ -12,8 +12,6 @@ on:
           - test
   schedule:
     - cron: '30 17 * * *'
-env:
-  QA_PLAYWRIGHT_BROWSER: ${{ vars.QA_PLAYWRIGHT_BROWSER }}
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -34,6 +32,8 @@ jobs:
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps chromium
     - name: Run your tests
+      env:
+        QA_PLAYWRIGHT_BROWSER: ${{ vars.QA_PLAYWRIGHT_BROWSER }}
       run: pytest
     - uses: actions/upload-artifact@v4
       if: always()
