@@ -1,0 +1,24 @@
+[tool.ruff]
+target-version = "py39"
+line-length = 99
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP", "SIM"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+
+[tool.pytest.ini_options]
+addopts = "--tb=short --alluredir=./artifacts/allure/"
+markers = [
+    "deprecated: Tests no longer used",
+    "smoke: Smoke tests",
+    "wip: Work In Progress",
+    ]
+testpaths = [
+    "tests",
+]
