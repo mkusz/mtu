@@ -12,6 +12,8 @@ on:
           - test
   schedule:
     - cron: '30 17 * * *'
+env:
+  QA_PLAYWRIGHT_BROWSER: ${{ vars.QA_PLAYWRIGHT_BROWSER }}
 jobs:
   test:
     runs-on: ubuntu-latest
