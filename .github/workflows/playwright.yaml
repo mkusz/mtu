@@ -34,6 +34,7 @@ jobs:
     - name: Run your tests
       env:
         QA_PLAYWRIGHT_BROWSER: ${{ vars.QA_PLAYWRIGHT_BROWSER }}
+        QA_ENV_URL_UI: ${{ vars.QA_ENV_URL_UI }}
       run: pytest
     - uses: actions/upload-artifact@v4
       if: always()
