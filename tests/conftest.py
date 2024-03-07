@@ -1,11 +1,7 @@
 import logging
 import pytest
-import sys
 import pathlib
 from datetime import datetime
-
-sys.path.append(".")
-
 from src import configs
 from src import loggers
 from src.page_object_models.trello_page import TrelloPage

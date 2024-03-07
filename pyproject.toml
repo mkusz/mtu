@@ -3,7 +3,7 @@ target-version = "py39"
 line-length = 99
 
 [tool.ruff.lint]
-select = ["B", "E", "F", "I", "UP", "SIM"]
+select = ["B", "E", "F", "UP", "SIM", "I"]
 
 [tool.ruff.lint.isort]
 force-single-line = true
@@ -22,4 +22,7 @@ markers = [
     ]
 testpaths = [
     "tests",
+]
+pythonpath = [
+    "",
 ]
