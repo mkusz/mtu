@@ -1,0 +1,38 @@
+name: Playwright Tests
+on:
+  workflow_dispatch:
+    inputs:
+      env_to_run_test:
+        description: Required environment to test
+        type: choice
+        required: false
+        default: stg
+        options:
+          - stg
+          - test
+  schedule:
+    - cron: '30 17 * * *'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.env_to_run_test }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Ensure browsers are installed
+      run: python -m playwright install --with-deps chromium
+    - name: Run your tests
+      run: pytest
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: Collect all logs
+        path: artifacts/
