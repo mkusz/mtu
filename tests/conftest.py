@@ -1,3 +1,4 @@
+import logging
 import pytest
 import sys
 import pathlib
@@ -6,7 +7,12 @@ from datetime import datetime
 sys.path.append(".")
 
 from src import configs
+from src import loggers
 import playwright.sync_api as playwright
+
+
+def log() -> logging.Logger:
+    return logging.getLogger(__name__)
 
 
 @pytest.fixture(scope="session")
@@ -49,6 +55,7 @@ def reporting_setup(env_config: configs.EnvConfig):
                 pathlib.Path(file).unlink(missing_ok=True)
             except PermissionError:
                 pass
+    loggers.configure_logging_from_yaml_file()
 
 
 @pytest.fixture()
@@ -85,15 +92,22 @@ def playwright_page(
 
     new_page: playwright.Page = browser_context.new_page()
 
+    if playwright_config.tracing_enable:
+        log().debug("Start recording tracing")
+        browser_context.tracing.start(
+            screenshots=playwright_config.tracing_screenshots,
+            snapshots=playwright_config.tracing_snapshots,
+        )
+
     with new_page as page:
         page.set_default_timeout(playwright_config.elements_timeout_sec * 1000)
+        log().info(f"Elements timeout: {playwright_config.elements_timeout_sec}")
         page.set_default_navigation_timeout(playwright_config.navigation_timeout_sec * 1000)
+        log().info(f"Navigation timeout: {playwright_config.navigation_timeout_sec}")
 
         yield page
 
         video_path = pathlib.Path(page.video.path()) if page.video else None
-
-    browser_context.close()
 
     try:
         test_status = request.node.stash["status"]["call"][:4]
@@ -102,6 +116,12 @@ def playwright_page(
     artifact_file_name = (
         f"{env_config.artifacts_dir}{session_timestamp}_{test_status}_{request.node.name}"
     )
+
+    if playwright_config.tracing_enable:
+        log().debug("Stop recording tracing")
+        browser_context.tracing.stop(path=f"{artifact_file_name}.zip")
+
+    browser_context.close()
 
     if video_path and video_path.exists():
         new_video_path = f"{artifact_file_name}{video_path.suffix}"
