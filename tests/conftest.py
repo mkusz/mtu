@@ -8,7 +8,7 @@ sys.path.append(".")
 
 from src import configs
 from src import loggers
-from src.page_object_models import trello_pom
+from src.page_object_models.trello_page import TrelloPage
 import playwright.sync_api as playwright
 
 
@@ -130,5 +130,5 @@ def playwright_page(
 
 
 @pytest.fixture()
-def trello_page(playwright_page: playwright.Page) -> trello_pom.TrelloPOM:
-    return trello_pom.TrelloPOM(page=playwright_page)
+def trello_page(playwright_page: playwright.Page) -> TrelloPage:
+    return TrelloPage(page=playwright_page)
