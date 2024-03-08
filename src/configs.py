@@ -24,3 +24,9 @@ class EnvConfig(pydantic_settings.BaseSettings):
     artifacts_dir: str = "artifacts/"
     artifacts_remove_old: bool = True
     url_ui: Optional[str] = None
+
+    user_name: Optional[str] = None
+    user_password: Optional[str] = None
+    all_dashboards: Optional[str] = None
+    dashboard: Optional[str] = None
+    dashboard_name: Optional[str] = None

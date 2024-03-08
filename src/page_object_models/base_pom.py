@@ -34,3 +34,4 @@ class PageObjectModelBase:
             url = self.default_url
         _logger().debug(f"Go to: {url}")
         self.page.goto(url)
+        self.page.wait_for_url(url)

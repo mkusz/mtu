@@ -1,4 +1,7 @@
+allure-pytest==2.13.2
+allure-python-commons==2.13.2
 annotated-types==0.6.0
+attrs==23.2.0
 exceptiongroup==1.2.0
 greenlet==3.0.3
 iniconfig==2.0.0
@@ -10,6 +13,7 @@ pydantic-settings==2.2.1
 pydantic_core==2.16.3
 pyee==11.0.1
 pytest==8.0.2
+pytest-check==2.3.1
 python-dotenv==1.0.1
 PyYAML==6.0.1
 ruff==0.3.1
