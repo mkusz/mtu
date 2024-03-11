@@ -10,8 +10,8 @@ on:
         options:
           - stg
           - test
-  schedule:
-    - cron: '30 17 * * *'
+#  schedule:
+#    - cron: '30 17 * * *'
 jobs:
   test:
     runs-on: ubuntu-latest

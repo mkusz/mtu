@@ -1,11 +1,14 @@
 import logging
 from src.page_object_models.trello_page import TrelloPage
+import pytest
 
 
 def log() -> logging.Logger:
     return logging.getLogger(__name__)
 
 
+@pytest.mark.wip
+@pytest.mark.smoke
 def test_check_basic_columns(check, trello_page: TrelloPage):
     trello_page.main_pom.goto()
     trello_page.main_pom.login()

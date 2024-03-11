@@ -13,8 +13,8 @@ max-complexity = 10
 
 
 [tool.pytest.ini_options]
-#addopts = "--tb=short --alluredir=./artifacts/allure/"
-addopts = "--tb=short"
+addopts = "--tb=short --alluredir=./artifacts/allure/"
+#addopts = "--tb=short"
 markers = [
     "deprecated: Tests no longer used",
     "smoke: Smoke tests",

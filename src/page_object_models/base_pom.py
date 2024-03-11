@@ -1,7 +1,11 @@
 import logging
 import urllib.parse
+import allure
 from typing import Optional
+from typing import Pattern
+from typing import Union
 
+import playwright.sync_api._generated as playwright_generated
 import playwright.sync_api as playwright
 
 from src import configs
@@ -16,11 +20,22 @@ class PageObjectModelBase:
         self.page: playwright.Page = page
         self.env: configs.EnvConfig = configs.EnvConfig()
         self.playwright: configs.PlaywrightConfig = configs.PlaywrightConfig()
+        self._expect = playwright.Expect()
+        self._expect.set_options(timeout=self.playwright.elements_timeout_sec * 1000)
 
     @property
     def default_url(self):
         """Returns default url of the given web page"""
         raise NotImplementedError
+
+    def expect(
+        self,
+        locator: playwright.Locator,
+    ) -> playwright_generated.LocatorAssertions:
+        try:
+            return self._expect(actual=locator)
+        except AssertionError:
+            raise
 
     def is_opened(self, selector: str):
         """Check is given POM opened (have to implemented inside given POM)"""
